@@ -43,7 +43,7 @@ git clone git@github.com:qmk/qmk_firmware.git
 ```
 3) Clone this repository inside the following folder structure `keyboards/tada68/keymaps/alphadel`
 ```
-git clone git@github.com:rafaeldelboni/alphadel-tada68-layout.git qmk_firmware/keyboards/tada68/keymaps/alphadel
+git clone git@github.com:RafaelDelboni/alphadel-tada68-layout.git qmk_firmware/keyboards/tada68/keymaps/alphadel
 ```
 
 ## Flashing Instructions
