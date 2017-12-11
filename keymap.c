@@ -3,10 +3,8 @@
 
 enum {
   MR_ESC_CAPS = 0,
-  MR_NXT_TRACK = 1,
-  MR_PRV_TRACK = 2,
-  MR_EMO_LENNY = 3,
-  MR_EMO_SHRUG = 4
+  MR_EMO_SHRG = 1,
+  MR_EMO_TFLP = 2
 };
 
 // Layers
@@ -16,10 +14,8 @@ enum {
 // Buttons
 #define _______ KC_TRNS
 #define ESC_CAPS M(MR_ESC_CAPS)
-#define TR_NEXT M(MR_NXT_TRACK)
-#define TR_PREV M(MR_PRV_TRACK)
-#define TRLENNY M(MR_EMO_LENNY)
-#define TRSHRUG M(MR_EMO_SHRUG)
+#define EM_SHRG M(MR_EMO_SHRG)
+#define EM_TFLP M(MR_EMO_TFLP)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   /* Keymap _BL: (Base Layer) Default Layer
@@ -50,7 +46,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * |----------------------------------------------------------------|
    * |      |<- |Dn | ->|   |   |   |   |TRP|TR-|TR+|   |        |End |
    * |----------------------------------------------------------------|
-   * |        |   |   |Bl-|BL |BL+|   |MUT|VU-|VU+|   |   McL|MsU|McR |
+   * |        |ESH|ETF|Bl-|BL |BL+|   |MUT|VU-|VU+|   |   McL|MsU|McR |
    * |----------------------------------------------------------------|
    * |    |    |    |                       |   |   |    |MsL|MsD|MsR |
    * `----------------------------------------------------------------'
@@ -58,9 +54,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_FL] = KEYMAP_ANSI(
   _______, KC_F1 ,KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, KC_DEL, KC_INS ,  \
   _______,_______, KC_UP,_______,_______, _______,_______,_______,_______,_______,_______,_______,_______, _______,KC_HOME, \
-  _______,KC_LEFT,KC_DOWN,KC_RIGHT,_______,_______,_______,_______,KC_MPLY,TR_PREV,TR_NEXT,_______,        _______,KC_END, \
-  _______,_______,_______,BL_DEC, BL_TOGG,BL_INC, _______,KC_MUTE,KC_VOLD,KC_VOLU,_______,KC_BTN1, KC_MS_U, KC_BTN2, \
+  _______,KC_LEFT,KC_DOWN,KC_RIGHT,_______,_______,_______,_______,KC_MPLY,KC_MPRV,KC_MNXT,_______,        _______,KC_END, \
+  _______,EM_SHRG,EM_TFLP,BL_DEC, BL_TOGG,BL_INC, _______,KC_MUTE,KC_VOLD,KC_VOLU,_______,KC_BTN1, KC_MS_U, KC_BTN2, \
   _______,_______,_______,                 _______,               _______,_______,_______,KC_MS_L,KC_MS_D, KC_MS_R),
+};
+
+void tap(uint16_t keycode){
+  register_code(keycode);
+  unregister_code(keycode);
 };
 
 bool is_caps_on = false;
@@ -86,19 +87,46 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
         }
       }
       break;
-    case MR_NXT_TRACK:
-      // Next track Windows / Mac
-      if (record->event.pressed) {
-        return MACRO( T(MNXT), T(MFFD), END );
+    case MR_EMO_TFLP: // (╯°□°)╯ ︵ ┻━┻
+      if(record->event.pressed){
+        register_code(KC_RSFT);
+        tap(KC_9);
+        unregister_code(KC_RSFT);
+        process_unicode((0x256F|QK_UNICODE), record);   // Arm
+        process_unicode((0x00B0|QK_UNICODE), record);   // Eye
+        process_unicode((0x25A1|QK_UNICODE), record);   // Mouth
+        process_unicode((0x00B0|QK_UNICODE), record);   // Eye
+        register_code(KC_RSFT);
+        tap(KC_0);
+        unregister_code(KC_RSFT);
+        process_unicode((0x256F|QK_UNICODE), record);   // Arm
+        tap(KC_SPC);
+        process_unicode((0x0361|QK_UNICODE), record);   // Flippy
+        tap(KC_SPC);
+        process_unicode((0x253B|QK_UNICODE), record);   // Table
+        process_unicode((0x2501|QK_UNICODE), record);   // Table
+        process_unicode((0x253B|QK_UNICODE), record);   // Table
       }
+      return false;
       break;
-    case MR_PRV_TRACK:
-      // Previous track Windows / Mac
-      if (record->event.pressed) {
-        return MACRO( T(MPRV), T(MRWD), END );
+    case MR_EMO_SHRG: // ¯\_(ツ)_/¯
+      if(record->event.pressed){
+        process_unicode((0x00AF|QK_UNICODE), record);   // Hand
+        tap(KC_BSLS);                                   // Arm
+        register_code(KC_RSFT);
+        tap(KC_UNDS);                                   // Arm
+        tap(KC_LPRN);                                   // Head
+        unregister_code(KC_RSFT);
+        process_unicode((0x30C4|QK_UNICODE), record);   // Face
+        register_code(KC_RSFT);
+        tap(KC_RPRN);                                   // Head
+        tap(KC_UNDS);                                   // Arm
+        unregister_code(KC_RSFT);
+        tap(KC_SLSH);                                   // Arm
+        process_unicode((0x00AF|QK_UNICODE), record);   // Hand
       }
+      return false;
       break;
   }
   return MACRO_NONE;
-}
-;
+};

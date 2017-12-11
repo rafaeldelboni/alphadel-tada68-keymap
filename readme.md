@@ -50,7 +50,7 @@ git clone git@github.com:RafaelDelboni/alphadel-tada68-layout.git qmk_firmware/k
 
 1) from the `qmk_firmware` directory run:
 ```
-$ make tada68-alphadel-bin
+$ make tada68:alphadel:bin
 ```
 
 2) hit the reset button on the TADA, the lights will start flashing.
