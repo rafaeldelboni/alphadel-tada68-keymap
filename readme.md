@@ -35,7 +35,7 @@ My TADA68 Custom Layout
 
 ## Build environment
 
-1) See [build environment setup](https://docs.qmk.fm/build_environment_setup.html) then the [make instructions](https://docs.qmk.fm/make_instructions.html) for more information.
+1) See [The Complete Newbs Guide To QMK](https://docs.qmk.fm/#/newbs) for more information.
 
 2) Clone the QMK repository
 ```
@@ -43,7 +43,7 @@ git clone git@github.com:qmk/qmk_firmware.git
 ```
 3) Clone this repository inside the following folder structure `keyboards/tada68/keymaps/alphadel`
 ```
-git clone git@github.com:RafaelDelboni/alphadel-tada68-layout.git qmk_firmware/keyboards/tada68/keymaps/alphadel
+git clone git@github.com:rafaeldelboni/alphadel-tada68-keymap.git qmk_firmware/keyboards/tada68/keymaps/alphadel
 ```
 
 ## Flashing Instructions
